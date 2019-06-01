@@ -5,7 +5,7 @@ This package provides Rocket Beans TV OAuth 2.0 support for the PHP League's [OA
 ## Installation
 
 ```
-composer require OliverSchloebe/oauth2-rbtv
+composer require oliverschloebe/oauth2-rbtv
 ```
 
 ## Usage
@@ -73,9 +73,11 @@ For more information see the PHP League's general usage examples.
 ## Testing
 
 ``` bash
-$ ./vendor/bin/phpunit
+$ ./vendor/bin/parallel-lint src test
+$ ./vendor/bin/phpunit --coverage-text
+$ ./vendor/bin/phpcs src --standard=psr2 -sp
 ```
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/OliverSchloebe/oauth2-rbtv/blob/master/LICENSE) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/oliverschloebe/oauth2-rbtv/blob/master/LICENSE) for more information.

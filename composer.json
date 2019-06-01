@@ -1,5 +1,5 @@
 {
-  "name": "OliverSchloebe/oauth2-rbtv",
+  "name": "oliverschloebe/oauth2-rbtv",
   "description": "Rocket Beans TV OAuth 2.0 package for the PHP League's OAuth 2.0 Client",
   "license": "MIT",
   "authors": [
@@ -24,8 +24,8 @@
     "rbtv"
   ],
   "support": {
-    "issues": "https://github.com/OliverSchloebe/oauth2-rbtv/issues",
-    "source": "https://github.com/OliverSchloebe/oauth2-rbtv.git"
+    "issues": "https://github.com/oliverschloebe/oauth2-rbtv/issues",
+    "source": "https://github.com/oliverschloebe/oauth2-rbtv.git"
   },
   "require": {
     "php": "^5.6|^7.0",

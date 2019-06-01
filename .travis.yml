@@ -7,14 +7,25 @@ php:
   - 7.2
   - 7.3
 
-before_script:
+matrix:
+  fast_finish: true
+
+sudo: false
+
+before_install:
   - travis_retry composer self-update
-  - travis_retry composer install --no-interaction --prefer-source --dev
+
+install:
+  - travis_retry composer require --no-update satooshi/php-coveralls:^1.0
+  - travis_retry composer install --no-interaction --prefer-source
+
+before_script:
+  - mkdir -p build/logs
 
 script:
-  - ./vendor/bin/phpcs --standard=psr2 src/
-  - ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+  - ./vendor/bin/parallel-lint src test
+  - ./vendor/bin/phpunit --verbose --coverage-clover build/logs/clover.xml
+  - ./vendor/bin/phpcs src --standard=psr2 -sp
 
-after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+after_success:
+  - travis_retry php vendor/bin/coveralls

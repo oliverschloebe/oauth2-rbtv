@@ -2,6 +2,10 @@
 
 This package provides Rocket Beans TV OAuth 2.0 support for the PHP League's [OAuth 2.0 Client](https://github.com/thephpleague/oauth2-client).
 
+[![Build Status](https://travis-ci.com/oliverschloebe/oauth2-rbtv.svg?branch=master)](https://travis-ci.com/oliverschloebe/oauth2-rbtv)
+
+---
+
 ## Installation
 
 ```

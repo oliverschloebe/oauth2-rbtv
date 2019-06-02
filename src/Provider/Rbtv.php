@@ -9,8 +9,8 @@ use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 
 class Rbtv extends AbstractProvider
-{	
-	use BearerAuthorizationTrait;
+{
+    use BearerAuthorizationTrait;
 
     /**
      * Get authorization url to begin OAuth flow
@@ -80,10 +80,10 @@ class Rbtv extends AbstractProvider
         if (isset($data['error'])) {
             $statusCode = $response->getStatusCode();
             $error = $data['error'];
-            $errorDescription = $data['error_description'];
+            $errorDesc = $data['error_description'];
             $errorLink = (isset($data['error_uri']) ? $data['error_uri'] : false);
             throw new IdentityProviderException(
-                $statusCode . ' - ' . $errorDescription . ': ' . $error . ($errorLink ? ' (see: ' . $errorLink . ')' : ''),
+                $statusCode . ' - ' . $errorDesc . ': ' . $error . ($errorLink ? ' (see: ' . $errorLink . ')' : ''),
                 $response->getStatusCode(),
                 $response
             );

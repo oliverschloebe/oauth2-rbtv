@@ -3,9 +3,10 @@
 namespace OliverSchloebe\OAuth2\Client\Test\Provider;
 
 use OliverSchloebe\OAuth2\Client\Provider\Rbtv;
+use PHPUnit\Framework\TestCase;
 use Mockery as m;
 
-class RbtvTest extends \PHPUnit_Framework_TestCase
+class RbtvTest extends TestCase
 {
     protected $provider;
 

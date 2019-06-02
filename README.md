@@ -35,31 +35,31 @@ $rbtvProvider = new \OliverSchloebe\OAuth2\Client\Provider\Rbtv([
 
 // Get authorization code
 if (!isset($_GET['code'])) {
-    // Options are optional, scope defaults to ['user.info']
-	$options = ['scope' => ['user.info', 'user.email.read', 'user.notification.list', 'user.notification.manage', 'user.subscription.manage', 'user.subscriptions.read']];
-    // Get authorization URL
-    $authorizationUrl = $rbtvProvider->getAuthorizationUrl($scopes);
+	// Options are optional, scope defaults to ['user.info']
+	$options = [ 'scope' => ['user.info', 'user.email.read', 'user.notification.list', 'user.notification.manage', 'user.subscription.manage', 'user.subscriptions.read'] ];
+	// Get authorization URL
+	$authorizationUrl = $rbtvProvider->getAuthorizationUrl($scopes);
 
-    // Get state and store it to the session
-    $_SESSION['oauth2state'] = $rbtvProvider->getState();
+	// Get state and store it to the session
+	$_SESSION['oauth2state'] = $rbtvProvider->getState();
 
-    // Redirect user to authorization URL
-    header('Location: ' . $authorizationUrl);
-    exit;
+	// Redirect user to authorization URL
+	header('Location: ' . $authorizationUrl);
+	exit;
 } elseif (empty($_GET['state']) || (isset($_SESSION['oauth2state']) && $_GET['state'] !== $_SESSION['oauth2state'])) { // Check for errors
-    if (isset($_SESSION['oauth2state'])) {
-        unset($_SESSION['oauth2state']);
-    }
-    exit('Invalid state');
+	if (isset($_SESSION['oauth2state'])) {
+		unset($_SESSION['oauth2state']);
+	}
+	exit('Invalid state');
 } else {
-    // Get access token
-    try {
-        $accessToken = $rbtvProvider->getAccessToken(
-            'authorization_code',
-            [
-                'code' => $_GET['code']
-            ]
-        );
+	// Get access token
+	try {
+		$accessToken = $rbtvProvider->getAccessToken(
+			'authorization_code',
+			[
+				'code' => $_GET['code']
+			]
+		);
 		
 		// We have an access token, which we may use in authenticated
 		// requests against the RBTV API.
@@ -67,22 +67,22 @@ if (!isset($_GET['code'])) {
 		echo 'Refresh Token: ' . $accessToken->getRefreshToken() . "<br />";
 		echo 'Expired in: ' . $accessToken->getExpires() . "<br />";
 		echo 'Already expired? ' . ($accessToken->hasExpired() ? 'expired' : 'not expired') . "<br />";
-    } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
-        exit($e->getMessage());
-    }
+	} catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
+		exit($e->getMessage());
+	}
 
-    // Get resource owner
-    try {
-        $resourceOwner = $rbtvProvider->getResourceOwner($accessToken);
-    } catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
-        exit($e->getMessage());
-    }
+	// Get resource owner
+	try {
+		$resourceOwner = $rbtvProvider->getResourceOwner($accessToken);
+	} catch (\League\OAuth2\Client\Provider\Exception\IdentityProviderException $e) {
+		exit($e->getMessage());
+	}
         
-    // Store the results to session or whatever
-    $_SESSION['accessToken'] = $accessToken;
-    $_SESSION['resourceOwner'] = $resourceOwner;
+	// Store the results to session or whatever
+	$_SESSION['accessToken'] = $accessToken;
+	$_SESSION['resourceOwner'] = $resourceOwner;
     
-    var_dump(
+	var_dump(
 		$resourceOwner->getId(),
 		$resourceOwner->getName(),
 		$resourceOwner->getEmail(),

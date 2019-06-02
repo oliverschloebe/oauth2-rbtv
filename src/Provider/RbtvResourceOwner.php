@@ -33,7 +33,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
      */
     public function getId()
     {
-    	return $this->getValueByKey($this->response, $this->resourceOwnerId);
+        return $this->getValueByKey($this->response, $this->resourceOwnerId);
     }
 
     /**

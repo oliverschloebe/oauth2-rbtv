@@ -33,7 +33,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
      */
     public function getId()
     {
-        return $this->getValueByKey($this->response, 'id');
+    	return $this->getValueByKey($this->response, $this->resourceOwnerId);
     }
 
     /**
@@ -41,9 +41,9 @@ class RbtvResourceOwner implements ResourceOwnerInterface
      *
      * @return string|null
      */
-    public function getDisplayName()
+    public function getName()
     {
-        return $this->getValueByKey($this->response, 'display_name');
+        return $this->getValueByKey($this->response, 'displayName');
     }
 
     /**
@@ -54,6 +54,16 @@ class RbtvResourceOwner implements ResourceOwnerInterface
     public function getEmail()
     {
         return $this->getValueByKey($this->response, 'email');
+    }
+    
+    /**
+     * Gets resource owner attribute by key. The key supports dot notation.
+     *
+     * @return mixed
+     */
+    public function getAttribute($key)
+    {
+        return $this->getValueByKey($this->response, (string) $key);
     }
 
     /**

@@ -37,7 +37,7 @@ class RbtvTest extends TestCase
         $url = $this->provider->getBaseAccessTokenUrl($params);
         $uri = parse_url($url);
 
-        $this->assertEquals('/oauth2/token', $uri['path']);
+        $this->assertEquals('/v1/oauth2/token', $uri['path']);
     }
 
     public function testGetAuthorizationUrl()

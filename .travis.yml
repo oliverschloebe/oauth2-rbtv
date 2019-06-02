@@ -17,7 +17,7 @@ before_install:
 
 install:
   - travis_retry composer require --no-update satooshi/php-coveralls:^1.0
-  - travis_retry composer install --no-interaction --prefer-source
+  - travis_retry composer install --no-interaction --prefer-source --dev
 
 before_script:
   - mkdir -p build/logs
@@ -29,3 +29,4 @@ script:
 
 after_success:
   - travis_retry php vendor/bin/coveralls
+  - bash <(curl -s https://codecov.io/bash)

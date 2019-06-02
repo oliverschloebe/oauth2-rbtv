@@ -38,7 +38,7 @@ if (!isset($_GET['code'])) {
 	// Options are optional, scope defaults to ['user.info']
 	$options = [ 'scope' => ['user.info', 'user.email.read', 'user.notification.list', 'user.notification.manage', 'user.subscription.manage', 'user.subscriptions.read'] ];
 	// Get authorization URL
-	$authorizationUrl = $rbtvProvider->getAuthorizationUrl($scopes);
+	$authorizationUrl = $rbtvProvider->getAuthorizationUrl($options);
 
 	// Get state and store it to the session
 	$_SESSION['oauth2state'] = $rbtvProvider->getState();

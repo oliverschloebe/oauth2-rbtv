@@ -11,6 +11,11 @@ use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 class Rbtv extends AbstractProvider
 {
     use BearerAuthorizationTrait;
+    
+    /**
+     * @var string Key used in the access token response to identify the resource owner.
+     */
+    const ACCESS_TOKEN_RESOURCE_OWNER_ID = 'userId';
 
     /**
      * Get authorization url to begin OAuth flow
@@ -66,7 +71,7 @@ class Rbtv extends AbstractProvider
     {
         return ' ';
     }
-
+    
     /**
      * Check a provider response for errors.
      *
@@ -101,20 +106,5 @@ class Rbtv extends AbstractProvider
     protected function createResourceOwner(array $response, AccessToken $token)
     {
         return new RbtvResourceOwner($response);
-    }
-
-    /**
-     * Returns a prepared request for requesting an access token.
-     *
-     * @param array $params
-     *
-     * @return Psr\Http\Message\RequestInterface
-     */
-    protected function getAccessTokenRequest(array $params)
-    {
-        $request = parent::getAccessTokenRequest($params);
-        $uri = $request->getUri()
-            ->withUserInfo($this->clientId, $this->clientSecret);
-        return $request->withUri($uri);
     }
 }

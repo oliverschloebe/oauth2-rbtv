@@ -21,7 +21,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
      *
      * @param array  $response
      */
-    public function __construct(array $response = array())
+    public function __construct(array $response)
     {
         $this->response = $response;
     }
@@ -33,7 +33,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
      */
     public function getId()
     {
-        return $this->getValueByKey($this->response, $this->resourceOwnerId);
+        return $this->getValueByKey($this->response['data'], 'id');
     }
 
     /**
@@ -43,7 +43,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
      */
     public function getName()
     {
-        return $this->getValueByKey($this->response, 'displayName');
+        return $this->getValueByKey($this->response['data'], 'displayName');
     }
 
     /**
@@ -53,7 +53,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
      */
     public function getEmail()
     {
-        return $this->getValueByKey($this->response, 'email');
+        return $this->getValueByKey($this->response['data'], 'email');
     }
     
     /**
@@ -63,7 +63,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
      */
     public function getAttribute($key)
     {
-        return $this->getValueByKey($this->response, (string) $key);
+        return $this->getValueByKey($this->response['data'], (string) $key);
     }
 
     /**

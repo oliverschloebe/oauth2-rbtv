@@ -5,6 +5,7 @@ This package provides Rocket Beans TV OAuth 2.0 support for the PHP League's [OA
 [![Build Status](https://travis-ci.com/oliverschloebe/oauth2-rbtv.svg?branch=master)](https://travis-ci.com/oliverschloebe/oauth2-rbtv)
 [![License](https://img.shields.io/packagist/l/oliverschloebe/oauth2-rbtv.svg)](https://github.com/oliverschloebe/oauth2-rbtv/blob/master/LICENSE)
 [![Latest Stable Version](https://img.shields.io/packagist/v/oliverschloebe/oauth2-rbtv.svg)](https://packagist.org/packages/oliverschloebe/oauth2-rbtv)
+[![Latest Version](https://img.shields.io/github/release/oliverschloebe/oauth2-rbtv.svg?style=flat-square)](https://github.com/oliverschloebe/oauth2-rbtv/releases)
 [![Source Code](http://img.shields.io/badge/source-oliverschloebe/oauth2--rbtv-blue.svg?style=flat-square)](https://github.com/oliverschloebe/oauth2-rbtv)
 [![Coverage Status](https://img.shields.io/coveralls/oliverschloebe/oauth2-rbtv/master.svg?style=flat-square)](https://coveralls.io/r/oliverschloebe/oauth2-rbtv?branch=master)
 
@@ -23,6 +24,8 @@ https://github.com/rocketbeans/rbtv-apidoc
 ## Usage
 
 [Register your apps on rocketbeans.tv](https://rocketbeans.tv/accountsettings/apps) to get `clientId` and `clientSecret`.
+
+### OAuth2 Authentication Flow
 
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
@@ -89,38 +92,82 @@ if (!isset($_GET['code'])) {
 		$resourceOwner->getAttribute('email'), // allows dot notation, e.g. $resourceOwner->getAttribute('group.field')
 		$resourceOwner->toArray()
 	);
-	
-	// The RBTV OAuth provider provides a way to get an authenticated API request for
-	// the service, using the access token; it returns an object conforming
-	// to Psr\Http\Message\RequestInterface.
-	$subscriptionsRequest = $rbtvProvider->getAuthenticatedRequest(
-		'GET',
-		'https://api.rocketbeans.tv/v1/subscription/mysubscriptions', // see https://github.com/rocketbeans/rbtv-apidoc#list-all-subscriptions
-		$accessToken
-	);
-	
-	// Get parsed response of authenticated user's current subscriptions; returns array|mixed
-	$mySubscriptions = $rbtvProvider->getParsedResponse($subscriptionsRequest);
-	
-	var_dump($mySubscriptions);
-	
-	// Or send a non-authenticated API request to public endpoints
-	// of the RBTV API; it returns an object conforming
-	// to Psr\Http\Message\RequestInterface.
-	$blogParams = [ 'limit' => 10 ];
-	$blogRequest = $rbtvProvider->getRequest(
-		'GET',
-		'https://api.rocketbeans.tv/v1/blog/preview/all?' . http_build_query($blogParams)
-	);
-	
-	// Get parsed response of non-authenticated API request; returns array|mixed
-	$blogPosts = $rbtvProvider->getParsedResponse($blogRequest);
-	
-	var_dump($blogPosts);
 }
 ```
 
-For more information see the PHP League's general usage examples.
+### Refreshing a Token
+
+Once your application is authorized, you can refresh an expired token using a refresh token rather than going through the entire process of obtaining a brand new token. To do so, simply reuse this refresh token from your data store to request a refresh.
+
+```php
+$rbtvProvider = new \OliverSchloebe\OAuth2\Client\Provider\Rbtv([
+	'clientId'	=> 'yourId',          // The client ID of your RBTV app
+	'clientSecret'	=> 'yourSecret',      // The client password of your RBTV app
+	'redirectUri'	=> 'yourRedirectUri'  // The return URL you specified for your app on RBTV
+]);
+
+$existingAccessToken = getAccessTokenFromYourDataStore();
+
+if ($existingAccessToken->hasExpired()) {
+	$newAccessToken = $rbtvProvider->getAccessToken('refresh_token', [
+		'refresh_token' => $existingAccessToken->getRefreshToken()
+	]);
+
+	// Purge old access token and store new access token to your data store.
+}
+```
+
+### Sending authenticated API requests
+
+```php
+...
+
+// The RBTV OAuth provider provides a way to get an authenticated API request for
+// the service, using the access token; it returns an object conforming
+// to Psr\Http\Message\RequestInterface.
+$subscriptionsRequest = $rbtvProvider->getAuthenticatedRequest(
+	'GET',
+	'https://api.rocketbeans.tv/v1/subscription/mysubscriptions', // see https://github.com/rocketbeans/rbtv-apidoc#list-all-subscriptions
+	$accessToken
+);
+
+// Get parsed response of authenticated user's current subscriptions; returns array|mixed
+$mySubscriptions = $rbtvProvider->getParsedResponse($subscriptionsRequest);
+
+var_dump($mySubscriptions);
+```
+
+### Sending non-authenticated API requests
+
+```php
+// Send a non-authenticated API request to public endpoints
+// of the RBTV API; it returns an object conforming
+// to Psr\Http\Message\RequestInterface.
+$blogParams = [ 'limit' => 10 ];
+$blogRequest = $rbtvProvider->getRequest(
+	'GET',
+	'https://api.rocketbeans.tv/v1/blog/preview/all?' . http_build_query($blogParams)
+);
+
+// Get parsed response of non-authenticated API request; returns array|mixed
+$blogPosts = $rbtvProvider->getParsedResponse($blogRequest);
+
+var_dump($blogPosts);
+```
+
+### Using a proxy
+
+It is possible to use a proxy to debug HTTP calls made to RBTV. All you need to do is set the proxy and verify options when creating your RBTV OAuth2 instance. Make sure to enable SSL proxying in your proxy.
+
+```php
+$rbtvProvider = new \OliverSchloebe\OAuth2\Client\Provider\Rbtv([
+	'clientId'	=> 'yourId',          // The client ID of your RBTV app
+	'clientSecret'	=> 'yourSecret',      // The client password of your RBTV app
+	'redirectUri'	=> 'yourRedirectUri'  // The return URL you specified for your app on RBTV
+	'proxy'		=> '192.168.0.1:8888',
+	'verify'	=> false
+]);
+```
 
 ## Requirements
 

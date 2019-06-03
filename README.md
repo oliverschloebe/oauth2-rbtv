@@ -120,9 +120,7 @@ if ($existingAccessToken->hasExpired()) {
 ### Sending authenticated API requests
 
 ```php
-...
-
-// The RBTV OAuth provider provides a way to get an authenticated API request for
+// The RBTV OAuth 2.0 provider provides a way to get an authenticated API request for
 // the service, using the access token; it returns an object conforming
 // to Psr\Http\Message\RequestInterface.
 $subscriptionsRequest = $rbtvProvider->getAuthenticatedRequest(
@@ -131,7 +129,7 @@ $subscriptionsRequest = $rbtvProvider->getAuthenticatedRequest(
 	$accessToken
 );
 
-// Get parsed response of authenticated user's current subscriptions; returns array|mixed
+// Get parsed response of current authenticated user's subscriptions; returns array|mixed
 $mySubscriptions = $rbtvProvider->getParsedResponse($subscriptionsRequest);
 
 var_dump($mySubscriptions);

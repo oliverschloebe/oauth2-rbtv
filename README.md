@@ -30,6 +30,8 @@ https://github.com/rocketbeans/rbtv-apidoc
 ```php
 require_once __DIR__ . '/vendor/autoload.php';
 
+//session_start(); // optional, depending on your used data store
+
 $rbtvProvider = new \OliverSchloebe\OAuth2\Client\Provider\Rbtv([
 	'clientId'	=> 'yourId',          // The client ID of your RBTV app
 	'clientSecret'	=> 'yourSecret',      // The client password of your RBTV app
@@ -119,10 +121,9 @@ if ($existingAccessToken->hasExpired()) {
 
 ### Sending authenticated API requests
 
+The RBTV OAuth 2.0 provider provides a way to get an authenticated API request for the service, using the access token; it returns an object conforming to `Psr\Http\Message\RequestInterface`.
+
 ```php
-// The RBTV OAuth 2.0 provider provides a way to get an authenticated API request for
-// the service, using the access token; it returns an object conforming
-// to Psr\Http\Message\RequestInterface.
 $subscriptionsRequest = $rbtvProvider->getAuthenticatedRequest(
 	'GET',
 	'https://api.rocketbeans.tv/v1/subscription/mysubscriptions', // see https://github.com/rocketbeans/rbtv-apidoc#list-all-subscriptions
@@ -137,10 +138,9 @@ var_dump($mySubscriptions);
 
 ### Sending non-authenticated API requests
 
+Send a non-authenticated API request to public endpoints of the RBTV API; it returns an object conforming to `Psr\Http\Message\RequestInterface`.
+
 ```php
-// Send a non-authenticated API request to public endpoints
-// of the RBTV API; it returns an object conforming
-// to Psr\Http\Message\RequestInterface.
 $blogParams = [ 'limit' => 10 ];
 $blogRequest = $rbtvProvider->getRequest(
 	'GET',

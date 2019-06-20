@@ -41,7 +41,7 @@ $rbtvProvider = new \OliverSchloebe\OAuth2\Client\Provider\Rbtv([
 // Get authorization code
 if (!isset($_GET['code'])) {
 	// Options are optional, scope defaults to ['user.info']
-	$options = [ 'scope' => ['user.info', 'user.email.read', 'user.notification.list', 'user.notification.manage', 'user.subscription.manage', 'user.subscriptions.read'] ];
+	$options = [ 'scope' => ['user.info', 'user.email.read', 'user.notification.list', 'user.notification.manage', 'user.subscription.manage', 'user.subscriptions.read', 'user.rbtvevent.read', 'user.rbtvevent.manage'] ];
 	// Get authorization URL
 	$authorizationUrl = $rbtvProvider->getAuthorizationUrl($options);
 

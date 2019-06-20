@@ -10,7 +10,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
     use ArrayAccessorTrait;
 
     /**
-     * Raw response
+     * Raw response.
      *
      * @var array
      */
@@ -19,7 +19,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
     /**
      * Creates new resource owner.
      *
-     * @param array  $response
+     * @param array $response
      */
     public function __construct(array $response)
     {
@@ -27,7 +27,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * Get resource owner id
+     * Get resource owner id.
      *
      * @return string|null
      */
@@ -37,7 +37,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * Get resource owner name
+     * Get resource owner name.
      *
      * @return string|null
      */
@@ -47,7 +47,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
     }
 
     /**
-     * Get resource owner email
+     * Get resource owner email.
      *
      * @return string|null
      */
@@ -55,7 +55,7 @@ class RbtvResourceOwner implements ResourceOwnerInterface
     {
         return $this->getValueByKey($this->response['data'], 'email');
     }
-    
+
     /**
      * Gets resource owner attribute by key. The key supports dot notation.
      *

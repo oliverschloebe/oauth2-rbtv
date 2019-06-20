@@ -2,9 +2,9 @@
 
 namespace OliverSchloebe\OAuth2\Client\Test\Provider;
 
+use Mockery as m;
 use OliverSchloebe\OAuth2\Client\Provider\Rbtv;
 use PHPUnit\Framework\TestCase;
-use Mockery as m;
 
 class RbtvTest extends TestCase
 {
@@ -13,9 +13,9 @@ class RbtvTest extends TestCase
     protected function setUp()
     {
         $this->provider = new Rbtv([
-            'clientId'		=> 'mock_client_id',
+            'clientId'		   => 'mock_client_id',
             'clientSecret'	=> 'mock_secret',
-            'redirectUri'	=> 'mock_redirect_uri'
+            'redirectUri'	 => 'mock_redirect_uri',
         ]);
     }
 

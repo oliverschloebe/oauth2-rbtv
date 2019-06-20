@@ -3,22 +3,22 @@
 namespace OliverSchloebe\OAuth2\Client\Provider;
 
 use League\OAuth2\Client\Provider\AbstractProvider;
-use Psr\Http\Message\ResponseInterface;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
+use Psr\Http\Message\ResponseInterface;
 
 class Rbtv extends AbstractProvider
 {
     use BearerAuthorizationTrait;
-    
+
     /**
      * @var string Key used in the access token response to identify the resource owner.
      */
     const ACCESS_TOKEN_RESOURCE_OWNER_ID = 'userId';
 
     /**
-     * Get authorization url to begin OAuth flow
+     * Get authorization url to begin OAuth flow.
      *
      * @return string
      */
@@ -28,7 +28,7 @@ class Rbtv extends AbstractProvider
     }
 
     /**
-     * Get access token url to retrieve token
+     * Get access token url to retrieve token.
      *
      * @param array $params
      *
@@ -40,7 +40,7 @@ class Rbtv extends AbstractProvider
     }
 
     /**
-     * Get provider url to fetch user details
+     * Get provider url to fetch user details.
      *
      * @param AccessToken $token
      *
@@ -71,12 +71,12 @@ class Rbtv extends AbstractProvider
     {
         return ' ';
     }
-    
+
     /**
      * Check a provider response for errors.
      *
-     * @param  ResponseInterface $response
-     * @param  array|string $data
+     * @param ResponseInterface $response
+     * @param array|string      $data
      *
      * @throws IdentityProviderException
      */
@@ -87,8 +87,9 @@ class Rbtv extends AbstractProvider
             $error = $data['error'];
             $errorDesc = $data['error_description'];
             $errorLink = (isset($data['error_uri']) ? $data['error_uri'] : false);
+
             throw new IdentityProviderException(
-                $statusCode . ' - ' . $errorDesc . ': ' . $error . ($errorLink ? ' (see: ' . $errorLink . ')' : ''),
+                $statusCode.' - '.$errorDesc.': '.$error.($errorLink ? ' (see: '.$errorLink.')' : ''),
                 $response->getStatusCode(),
                 $response
             );
@@ -98,7 +99,7 @@ class Rbtv extends AbstractProvider
     /**
      * Generate a user object from a successful user details request.
      *
-     * @param array $response
+     * @param array       $response
      * @param AccessToken $token
      *
      * @return League\OAuth2\Client\Provider\ResourceOwnerInterface

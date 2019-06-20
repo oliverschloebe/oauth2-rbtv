@@ -8,7 +8,6 @@ This package provides Rocket Beans TV OAuth 2.0 support for the PHP League's [OA
 [![Latest Stable Version](https://img.shields.io/packagist/v/oliverschloebe/oauth2-rbtv.svg)](https://packagist.org/packages/oliverschloebe/oauth2-rbtv)
 [![Latest Version](https://img.shields.io/github/release/oliverschloebe/oauth2-rbtv.svg?style=flat-square)](https://github.com/oliverschloebe/oauth2-rbtv/releases)
 [![Source Code](http://img.shields.io/badge/source-oliverschloebe/oauth2--rbtv-blue.svg?style=flat-square)](https://github.com/oliverschloebe/oauth2-rbtv)
-[![Coverage Status](https://img.shields.io/coveralls/oliverschloebe/oauth2-rbtv/master.svg?style=flat-square)](https://coveralls.io/r/oliverschloebe/oauth2-rbtv?branch=master)
 
 ---
 
